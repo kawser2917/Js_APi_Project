@@ -129,6 +129,21 @@
            
         </nav>
     </footer>
+    <!-- Here is modal -->
+    <button id="showModalData" class="btn hidden" onclick="customModal.showModal()">open modal</button>
+    <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <div id="modal-content" class="text-center">
+
+        </div>
+        <div class="modal-action">
+        <form method="dialog" class="w-full">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-primary btn-block">Close</button>
+        </form>
+        </div>
+    </div>
+    </dialog>
     <script src="script/pet.js"></script>
 </body>
 
