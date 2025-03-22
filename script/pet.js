@@ -15,8 +15,20 @@ const loadPets = () => {
 const loadCategoryPets = (category) => {
     fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
         .then(res => res.json())
-        .then(data => displayPets(data.data))
+        .then(data => {
+            removeActiveClass()
+            const activeBtn = document.getElementById(`btn-${category}`)
+            activeBtn.classList.add('active')
+            displayPets(data.data)
+        })
         .catch(err => console.log(err))
+}
+
+const removeActiveClass = () => {
+    const categoryBtn = document.getElementsByClassName('category-btn')
+    for(const category of categoryBtn){
+        category.classList.remove('active')
+    }
 }
 const displayPets = (pets) => {
     const petContainer = document.getElementById('pets-container')
@@ -65,7 +77,7 @@ const displayPets = (pets) => {
                 <p> Gender: ${pet.price}</p>
             </div> 
             <div class="card-actions flex justify-between">
-                <button class="btn">
+                <button class="btn" onclick="likedPet(${pet.petId})">
                     <img class="w-[20px]" src="https://img.icons8.com/?size=100&id=L2sPz0nl-coE&format=png&color=000000" />
                 </button>
                 <button class="btn text-[#0E7A81] text-[18px]">
@@ -88,7 +100,7 @@ const displayButtons = (buttons) => {
         const buttonDiv = document.createElement('div')
         buttonDiv.innerHTML = `
         <div id="btn-${btn.category}" 
-        onclick="loadCategoryPets('${btn.category}')" class="border rounded-2xl border-[#2E3E51] p-6 lg:w-[312px] flex justify-center">
+        onclick="loadCategoryPets('${btn.category}')" class="border rounded-2xl border-[#2E3E51] p-6 lg:w-[312px] flex justify-center category-btn">
             <button class="flex gap-4 justify-center items-center"> 
                 <img class="w-12 h-12" src="${btn.category_icon}">
                 <p class="text-3xl">${btn.category}</p>
@@ -100,12 +112,29 @@ const displayButtons = (buttons) => {
     }
 }
 // For modal code
-const petDetails = (id) =>{
+const petDetails = (id) => {
     fetch(`https://openapi.programming-hero.com/api/peddy/pet/${id}`)
-    .then(res=>res.json())
-    .then(data=>displayPetDetails(data.petData))
-    .catch(err=>console.log(err))
-    
+        .then(res => res.json())
+        .then(data => displayPetDetails(data.petData))
+        .catch(err => console.log(err))
+
+}
+const likedPet = (id) => {
+    fetch(`https://openapi.programming-hero.com/api/peddy/pet/${id}`)
+        .then(res => res.json())
+        .then(data => showImage(data.petData))
+        .catch(err => console.log(err))
+
+}
+
+const showImage = (pet) => {
+    const likedPetContainer = document.getElementById('liked-animal')
+    const newDiv = document.createElement('div')
+    console.log(pet)
+    newDiv.innerHTML = `
+        <img class="object-cover w-40" src="${pet.image}" />
+    `
+    likedPetContainer.appendChild(newDiv)
 }
 const displayPetDetails = (pet) => {
     console.log(pet)

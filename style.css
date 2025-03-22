@@ -1,3 +1,9 @@
-*{
+* {
     font-family: "Lato", sans-serif;
+}
+
+.active {
+    border: 1.5px solid #0E7A81;
+    border-radius: 120px;
+    background: rgba(14, 122, 129, 0.10);
 }
