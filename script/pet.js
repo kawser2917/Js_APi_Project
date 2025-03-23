@@ -19,7 +19,17 @@ const loadCategoryPets = (category) => {
             removeActiveClass()
             const activeBtn = document.getElementById(`btn-${category}`)
             activeBtn.classList.add('active')
+            const allAnimal = document.getElementById("all-animal")
+            const spinner = document.getElementById('spinner')
+            allAnimal.style.display = 'none'
+            spinner.classList.remove('hidden')
             displayPets(data.data)
+            setTimeout(() => {
+                spinner.classList.add('hidden')
+                allAnimal.style.display = "block"
+            },3000);
+            
+            
         })
         .catch(err => console.log(err))
 }
